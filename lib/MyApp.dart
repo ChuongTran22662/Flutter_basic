@@ -35,9 +35,36 @@ class MyApp extends StatefulWidget {
 //  }
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String _email = '';
   final emailEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    print('Run initState');
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    WidgetsBinding.instance.addObserver(this);
+    print('Run dispose');
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      print('App is in Background mode');
+    } else if (state == AppLifecycleState.resumed) {
+      print('App is in Foreground mode');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
